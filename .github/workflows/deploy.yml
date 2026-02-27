@@ -1,0 +1,33 @@
+name: App deploy
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            APP_DIR=/home/ec2-user/Python_Demo
+            if [ ! -d "$APP_DIR" ]; then
+              echo "First time deployment. Cloning repository..."
+              git clone https://github.com/Deepan474/Python_Demo.git $APP_DIR
+            else
+              echo "Repository already exists. Pulling latest changes..." 
+              cd $APP_DIR
+              git pull origin main  
+            fi
+            cd $APP_DIR
+            if [! -d "venv" ]; then
+              echo "Setting up virtual environment..."
+              python3 -m venv venv
+            fi
+            source venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            
+            sudo systemctl restart gunicorn
+            echo "Deployment completed successfully!"
