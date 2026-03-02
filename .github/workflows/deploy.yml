@@ -14,15 +14,16 @@ jobs:
             APP_DIR=/home/ec2-user/Python_Demo
             if [ ! -d "$APP_DIR/.git" ]; then
               echo "First time deployment. Cloning repository..."
-              rm -rf $APP_DIR
+              sudo rm -rf $APP_DIR
               git clone https://github.com/Deepan474/Python_Demo.git $APP_DIR
             else
               echo "Repository already exists. Pulling latest changes..." 
               cd $APP_DIR
               git pull origin main  
             fi
-            cd $APP_DIR
+            
             sudo chown -R ec2-user:ec2-user $APP_DIR
+            cd $APP_DIR
             if [ ! -d "venv" ]; then
               echo "Setting up virtual environment..."
               python3 -m venv venv
