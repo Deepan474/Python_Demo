@@ -4,6 +4,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug Host
+        run: |
+         if [ -z "${{ secrets.EC2_HOST }}" ]; then
+           echo "EC2_HOST secret is not set."
+           exit 1
+         else
+           echo "EC2_HOST: ${{ secrets.EC2_HOST }}"
+         fi
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.5
         with:
