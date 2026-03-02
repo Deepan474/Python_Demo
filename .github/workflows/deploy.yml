@@ -19,7 +19,7 @@ jobs:
             else
               echo "Repository already exists. Pulling latest changes..." 
               cd $APP_DIR
-              git pull origin main  
+              git pull origin master  
             fi
             
             sudo chown -R ec2-user:ec2-user $APP_DIR
