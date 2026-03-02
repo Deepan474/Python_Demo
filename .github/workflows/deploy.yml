@@ -4,6 +4,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: show EC2 Host length
+        run: |
+          echo "Length:"
+          echo -n "${{ secrets.EC2_HOST }}" | wc -c
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.5
         with:
