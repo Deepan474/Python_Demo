@@ -1,13 +1,9 @@
 name: App deploy
-on: push
+on: [push, workflow_dispatch]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug Host
-        run: |
-         echo "Raw host value:"
-         printf '%s' "${{ secrets.EC2_HOST }}" | od -c
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.5
         with:
