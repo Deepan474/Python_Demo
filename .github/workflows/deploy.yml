@@ -10,7 +10,7 @@ jobs:
            echo "EC2_HOST secret is not set."
            exit 1
          else
-           echo "EC2_HOST: ${{ secrets.EC2_HOST }}"
+           echo "EC2_HOST is set"
          fi
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.5
